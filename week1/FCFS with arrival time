@@ -1,0 +1,62 @@
+#include<stdio.h>
+int main() {
+    int n,avgw = 0,avgt = 0;
+    int bt[20];
+    int wt[20];
+    int tat[20];
+    int at[20];
+    int st[20];
+
+    printf("Enter the num of processes\n");
+    scanf("%d",&n);
+    printf("Enter the burst time for each process\n");
+    for(int i = 0;i < n;i++) {
+        scanf("%d",&bt[i]);
+    }
+    printf("Enter the Arrival time of process\n");
+    for(int i = 0;i < n;i++) {
+        scanf("%d",&at[i]);
+    }
+
+    wt[0] =0;
+    st[0] = at[0];
+    printf("\nprocess\t       burst_time\t   Arrival_time\t        waiting_time\t       turnaround_time\t\n");
+    for(int i = 1; i <=n; i++)
+    {
+
+        st[i] = st[i-1]+ bt[i-1];
+        //st[i] = st[i] - at[i];
+        wt[i] = st[i] - at[i];
+        tat[i-1] = wt[i-1] + bt[i-1];
+        avgw = avgw + wt[i];
+        avgt = avgt + tat[i];
+        printf("%d\t\t\t%d\t\t%d\t\t\t%d\t\t\t%d\n" ,i,bt[i-1],at[i-1],wt[i-1],tat[i-1]);
+    }
+    avgw = avgw/n;
+    avgt = avgt/n;
+    printf("Avg waiting time =  %d\n",avgw);
+    printf("Avg turnaround time =  %d\n",avgt);
+    return 0;
+}
+/*OUTPUT:
+Enter the num of processes
+4
+Enter the burst time for each process
+6
+5
+5
+3
+Enter the Arrival time of process
+1
+1
+2
+2
+
+process        burst_time          Arrival_time         waiting_time           turnaround_time
+1                       6               1                       0                       6
+2                       5               1                       6                       11
+3                       5               2                       10                      15
+4                       3               2                       15                      18
+Avg waiting time =  -3
+Avg turnaround time =  2572516
+*/
